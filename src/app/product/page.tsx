@@ -10,9 +10,9 @@ import { Info, ShieldCheck, Zap, Truck } from "lucide-react";
 import { Installation } from "@/components/home/Installation";
 
 const variants = [
-  { id: "white", name: "Classic White", hex: "#FFFFFF", image: "/assets/hero-product.png" },
-  { id: "gray", name: "Soft Gray", hex: "#E5E5E5", image: "/assets/hero-product.png" }, // Placeholder, would generate more
-  { id: "black", name: "Matte Black", hex: "#1A1A1A", image: "/assets/hero-product.png" }, // Placeholder
+  { id: "white", name: "Classic White", hex: "#FFFFFF", image: "/assets/hero-product.svg" },
+  { id: "gray", name: "Soft Gray", hex: "#E5E5E5", image: "/assets/hero-product.svg" },
+  { id: "black", name: "Matte Black", hex: "#1A1A1A", image: "/assets/hero-product.svg" },
 ];
 
 export default function ProductPage() {
@@ -41,7 +41,7 @@ export default function ProductPage() {
             <div className="grid grid-cols-4 gap-4 mt-6">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="aspect-square rounded-2xl overflow-hidden border-2 border-muted hover:border-accent transition-colors cursor-pointer bg-muted/50">
-                  {/* Thumbnails */}
+                  <Image src={`/assets/thumb-${i}.svg`} alt={`View ${i}`} fill className="object-cover opacity-60 hover:opacity-100 transition-opacity" />
                 </div>
               ))}
             </div>

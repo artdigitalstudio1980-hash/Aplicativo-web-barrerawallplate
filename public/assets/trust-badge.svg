@@ -1,0 +1,23 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="trustBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAFAFA"/>
+      <stop offset="100%" style="stop-color:#F5F5F5"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="400" fill="url(#trustBg)"/>
+
+  <!-- Shield icon -->
+  <path d="M300 80 L420 130 L420 230 C420 300 300 350 300 350 C300 350 180 300 180 230 L180 130 Z" fill="none" stroke="#1A1A1A" stroke-width="2" opacity="0.1"/>
+  <path d="M300 100 L390 140 L390 220 C390 270 300 310 300 310 C300 310 210 270 210 220 L210 140 Z" fill="#1A1A1A" opacity="0.05"/>
+
+  <!-- Checkmark -->
+  <path d="M260 200 L290 230 L340 170" stroke="#1A1A1A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+
+  <!-- Lock -->
+  <rect x="280" y="240" width="40" height="35" rx="4" fill="#1A1A1A" opacity="0.1"/>
+  <path d="M285 240 L285 225 C285 210 315 210 315 225 L315 240" stroke="#1A1A1A" stroke-width="2" fill="none" opacity="0.2"/>
+
+  <text x="300" y="360" font-family="system-ui, sans-serif" font-size="10" font-weight="300" fill="#999" text-anchor="middle" letter-spacing="1">SECURE CHECKOUT</text>
+</svg>

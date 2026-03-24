@@ -21,7 +21,7 @@ export function Comparison() {
           </div>
           <div className="aspect-4/5 rounded-4xl overflow-hidden border border-muted">
             <Image
-              src="/assets/before-product.png"
+              src="/assets/before-product.svg"
               alt="Traditional wall plate with screws"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -40,7 +40,7 @@ export function Comparison() {
           </div>
           <div className="aspect-4/5 rounded-4xl overflow-hidden border-4 border-white shadow-2xl">
             <Image
-              src="/assets/hero-product.png"
+              src="/assets/hero-product.svg"
               alt="Barrera Wallplate Seamless Finish"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"

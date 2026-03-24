@@ -1,0 +1,29 @@
+<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heroBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A1A"/>
+      <stop offset="100%" style="stop-color:#2D2D2D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dark Premium Background -->
+  <rect width="1200" height="600" fill="url(#heroBg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03" stroke="#FFF" stroke-width="0.5">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="600"/>
+    <line x1="400" y1="0" x2="400" y2="600"/>
+    <line x1="600" y1="0" x2="600" y2="600"/>
+    <line x1="800" y1="0" x2="800" y2="600"/>
+    <line x1="1000" y1="0" x2="1000" y2="600"/>
+  </g>
+
+  <!-- Abstract light accents -->
+  <circle cx="100" cy="100" r="200" fill="#FFF" opacity="0.02"/>
+  <circle cx="1100" cy="500" r="300" fill="#FFF" opacity="0.02"/>
+</svg>

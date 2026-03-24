@@ -18,7 +18,7 @@ export default function DesignSystemPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32">
           <div className="relative aspect-square rounded-4xl overflow-hidden shadow-2xl">
             <Image
-              src="/assets/design-integration.png"
+              src="/assets/design-integration.svg"
               alt="Barrera Wallplate integrated with premium wallpaper"
               fill
               className="object-cover"

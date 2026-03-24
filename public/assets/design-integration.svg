@@ -1,0 +1,54 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="wallpaper" patternUnits="userSpaceOnUse" width="40" height="40">
+      <rect width="40" height="40" fill="#F8F6F3"/>
+      <circle cx="20" cy="20" r="8" fill="none" stroke="#E8E4DE" stroke-width="0.5"/>
+      <circle cx="0" cy="0" r="8" fill="none" stroke="#E8E4DE" stroke-width="0.5"/>
+      <circle cx="40" cy="0" r="8" fill="none" stroke="#E8E4DE" stroke-width="0.5"/>
+      <circle cx="0" cy="40" r="8" fill="none" stroke="#E8E4DE" stroke-width="0.5"/>
+      <circle cx="40" cy="40" r="8" fill="none" stroke="#E8E4DE" stroke-width="0.5"/>
+    </pattern>
+    <linearGradient id="seamlessBlend" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#FFFFFF;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0"/>
+    </linearGradient>
+    <clipPath id="plateClip">
+      <rect x="250" y="250" width="300" height="340" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <!-- Wallpaper Background -->
+  <rect width="800" height="800" fill="url(#wallpaper)"/>
+
+  <!-- Soft shadow under plate -->
+  <rect x="260" y="260" width="280" height="320" rx="18" fill="#000" opacity="0.08"/>
+
+  <!-- Main Seamless Wall Plate -->
+  <rect x="250" y="250" width="300" height="340" rx="20" fill="#FAFAFA" filter="drop-shadow(0 2 10 rgba(0,0,0,0.05))"/>
+
+  <!-- Seamless edge - matches wallpaper pattern -->
+  <rect x="250" y="250" width="300" height="340" rx="20" fill="none" stroke="#E8E4DE" stroke-width="1"/>
+
+  <!-- Switch area -->
+  <rect x="320" y="340" width="160" height="160" rx="4" fill="#1A1A1A"/>
+  <rect x="355" y="365" width="90" height="110" rx="45" fill="#3A3A3A"/>
+  <rect x="370" y="380" width="60" height="60" rx="30" fill="#2A2A2A"/>
+
+  <!-- Perfect integration - no visible hardware -->
+  <circle cx="270" cy="270" r="2" fill="transparent"/>
+  <circle cx="530" cy="270" r="2" fill="transparent"/>
+  <circle cx="270" cy="570" r="2" fill="transparent"/>
+  <circle cx="530" cy="570" r="2" fill="transparent"/>
+
+  <!-- Brand mark - subtle -->
+  <text x="400" y="545" font-family="system-ui, sans-serif" font-size="9" font-weight="300" fill="#CCC" text-anchor="middle" letter-spacing="2">BARRERA</text>
+
+  <!-- Harmony indicator -->
+  <g opacity="0.15">
+    <line x1="100" y1="250" x2="250" y2="250" stroke="#1A1A1A" stroke-width="1"/>
+    <line x1="550" y1="250" x2="700" y2="250" stroke="#1A1A1A" stroke-width="1"/>
+    <line x1="100" y1="590" x2="250" y2="590" stroke="#1A1A1A" stroke-width="1"/>
+    <line x1="550" y1="590" x2="700" y2="590" stroke="#1A1A1A" stroke-width="1"/>
+  </g>
+</svg>

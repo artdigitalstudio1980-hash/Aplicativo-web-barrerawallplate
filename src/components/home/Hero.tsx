@@ -70,7 +70,7 @@ export function Hero() {
           className="relative aspect-4/5 rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl border-4 lg:border-8 border-white mt-12 lg:mt-0"
         >
           <Image
-            src="/assets/hero-product.png"
+            src="/assets/hero-product.svg"
             alt="Barrera Wallplate Premium Screwless Finish"
             fill
             className="object-cover"

@@ -13,7 +13,7 @@ interface CartDrawerProps {
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   // Simple state for demonstration
   const cartItems = [
-    { id: 1, name: "Aura Wall Plate (White)", price: 24, quantity: 2, image: "/assets/hero-product.png" },
+    { id: 1, name: "Aura Wall Plate (White)", price: 24, quantity: 2, image: "/assets/hero-product.svg" },
   ];
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
