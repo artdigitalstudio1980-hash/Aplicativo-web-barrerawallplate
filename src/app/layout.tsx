@@ -5,6 +5,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { EmailCapture } from "@/components/home/EmailCapture";
 import { StickyCTA } from "@/components/home/StickyCTA";
+import { CartProvider } from "@/lib/cart";
+import { CartDrawer } from "@/components/cart/CartDrawer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,11 +45,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        {children}
-        <Footer />
-        <EmailCapture delay={20000} />
-        <StickyCTA />
+        <CartProvider>
+          <Navbar />
+          {children}
+          <Footer />
+          <CartDrawer />
+          <EmailCapture delay={20000} />
+          <StickyCTA />
+        </CartProvider>
       </body>
     </html>
   );

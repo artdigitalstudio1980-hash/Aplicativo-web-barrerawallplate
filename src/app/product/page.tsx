@@ -8,16 +8,36 @@ import { Section } from "@/components/ui/Section";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Info, ShieldCheck, Zap, Truck } from "lucide-react";
 import { Installation } from "@/components/home/Installation";
+import { useCart } from "@/lib/cart";
 
 const variants = [
-  { id: "white", name: "Classic White", hex: "#FFFFFF", image: "/assets/hero-product.svg" },
-  { id: "gray", name: "Soft Gray", hex: "#E5E5E5", image: "/assets/hero-product.svg" },
-  { id: "black", name: "Matte Black", hex: "#1A1A1A", image: "/assets/hero-product.svg" },
+  { id: "white", name: "Classic White", hex: "#FFFFFF" },
+  { id: "gray", name: "Soft Gray", hex: "#E5E5E5" },
+  { id: "black", name: "Matte Black", hex: "#1A1A1A" },
 ];
+
+// Placeholder images - replace with real product shots
+const placeholderImages: Record<string, string> = {
+  white: "/assets/hero-product.svg",
+  gray: "/assets/hero-product.svg",
+  black: "/assets/hero-product.svg",
+};
 
 export default function ProductPage() {
   const [selectedVariant, setSelectedVariant] = useState(variants[0]);
   const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCart();
+
+  const handleAddToCart = () => {
+    addItem({
+      id: `aura-${selectedVariant.id}`,
+      name: "Aura Seamless Wall Plate",
+      variant: `${selectedVariant.name} · 1-Gang`,
+      variantId: selectedVariant.id,
+      price: 24.00,
+      image: placeholderImages[selectedVariant.id],
+    });
+  };
 
   return (
     <main className="min-h-screen bg-background pt-32">
@@ -31,18 +51,27 @@ export default function ProductPage() {
               className="aspect-square rounded-4xl overflow-hidden border-8 border-white shadow-2xl relative"
             >
               <Image
-                src={selectedVariant.image}
-                alt={selectedVariant.name}
+                src={placeholderImages[selectedVariant.id]}
+                alt={`Aura Wall Plate - ${selectedVariant.name}`}
                 fill
                 className="object-cover transition-transform duration-500 hover:scale-105"
               />
+              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full">
+                <span className="text-xs font-bold text-accent">{selectedVariant.name}</span>
+              </div>
             </motion.div>
             
             <div className="grid grid-cols-4 gap-4 mt-6">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="aspect-square rounded-2xl overflow-hidden border-2 border-muted hover:border-accent transition-colors cursor-pointer bg-muted/50">
-                  <Image src={`/assets/thumb-${i}.svg`} alt={`View ${i}`} fill className="object-cover opacity-60 hover:opacity-100 transition-opacity" />
-                </div>
+              {variants.map((v) => (
+                <button
+                  key={v.id}
+                  onClick={() => setSelectedVariant(v)}
+                  className={`aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
+                    selectedVariant.id === v.id ? "border-accent shadow-lg" : "border-muted hover:border-muted-foreground"
+                  }`}
+                >
+                  <div className="w-full h-full" style={{ backgroundColor: v.hex }} />
+                </button>
               ))}
             </div>
           </div>
@@ -54,6 +83,7 @@ export default function ProductPage() {
               <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-accent mb-4">
                 The Aura Seamless Wall Plate
               </h1>
+              <p className="text-sm text-muted-foreground mb-4">1-Gang Standard Size · Screwless Design</p>
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl font-light text-accent">$24.00</span>
                 <span className="px-2 py-1 bg-green-500/10 text-green-600 text-[10px] font-bold uppercase tracking-wider rounded-md">
@@ -61,13 +91,13 @@ export default function ProductPage() {
                 </span>
               </div>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Transform your home’s aesthetic with the Aura Series. Our patented snap-on system eliminates visible screws, creating a perfectly clean, minimalist finish that elevates any room.
+                Transform your home's aesthetic with the Aura Series. Our patented snap-on system eliminates visible screws, creating a perfectly clean, minimalist finish that elevates any room.
               </p>
             </div>
 
             {/* Variant Selector */}
             <div className="space-y-4">
-              <p className="text-xs font-bold uppercase tracking-widest text-accent">Finish: <span className="text-muted-foreground">{selectedVariant.name}</span></p>
+              <p className="text-xs font-bold uppercase tracking-widest text-accent">Finish: <span className="text-muted-foreground font-normal">{selectedVariant.name}</span></p>
               <div className="flex gap-4">
                 {variants.map((v) => (
                   <button
@@ -89,11 +119,11 @@ export default function ProductPage() {
             {/* Add to Cart */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <div className="flex items-center border-2 border-muted rounded-full px-4 h-14">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-2 text-muted-foreground hover:text-accent font-bold">-</button>
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-2 text-muted-foreground hover:text-accent font-bold text-lg">−</button>
                 <span className="w-12 text-center font-bold">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="p-2 text-muted-foreground hover:text-accent font-bold">+</button>
+                <button onClick={() => setQuantity(quantity + 1)} className="p-2 text-muted-foreground hover:text-accent font-bold text-lg">+</button>
               </div>
-              <Button size="lg" className="flex-1 h-14 text-lg">
+              <Button size="lg" className="flex-1 h-14 text-lg" onClick={handleAddToCart}>
                 Add to Cart — ${(24 * quantity).toFixed(2)}
               </Button>
             </div>
@@ -114,8 +144,8 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {/* Product Details Collapse (Simplified for now) */}
-            <GlassCard className="p-6!">
+            {/* Product Details */}
+            <GlassCard className="p-6">
               <div className="space-y-4">
                 <div className="flex justify-between items-center border-b border-muted pb-3">
                   <span className="font-bold text-sm">Product Specifications</span>
@@ -123,8 +153,10 @@ export default function ProductPage() {
                 </div>
                 <ul className="text-xs text-muted-foreground space-y-2">
                   <li className="flex justify-between"><span>Material</span><span className="text-accent font-medium">Premium High-Gloss Polymer</span></li>
-                  <li className="flex justify-between"><span>Dimensions</span><span className="text-accent font-medium">4.5&quot; x 2.75&quot; (Standard 1-Gang)</span></li>
-                  <li className="flex justify-between"><span>Compatibility</span><span className="text-accent font-medium">All standard switch/outlet types</span></li>
+                  <li className="flex justify-between"><span>Dimensions</span><span className="text-accent font-medium">4.5" × 2.75" (Standard 1-Gang)</span></li>
+                  <li className="flex justify-between"><span>Finish</span><span className="text-accent font-medium">{selectedVariant.name}</span></li>
+                  <li className="flex justify-between"><span>Compatibility</span><span className="text-accent font-medium">All standard US switch/outlet types</span></li>
+                  <li className="flex justify-between"><span>Installation</span><span className="text-accent font-medium">Snap-on, no tools needed</span></li>
                 </ul>
               </div>
             </GlassCard>
@@ -134,7 +166,7 @@ export default function ProductPage() {
 
       <Installation />
 
-      {/* FAQ Preview */}
+      {/* FAQ */}
       <Section className="bg-muted/30">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold tracking-tighter mb-12 text-center">Frequently Asked Questions</h2>
@@ -149,6 +181,9 @@ export default function ProductPage() {
                 <p className="text-sm text-muted-foreground pl-7">{item.a}</p>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <a href="/faq" className="text-accent underline text-sm">View all FAQs →</a>
           </div>
         </div>
       </Section>

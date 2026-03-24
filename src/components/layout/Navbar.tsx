@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { CartDrawer } from "@/components/cart/CartDrawer";
+import { useCart } from "@/lib/cart";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { itemCount, setIsOpen: setCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,12 +43,10 @@ export function Navbar() {
               isScrolled ? "glass-heavy shadow-xl" : "bg-transparent"
             )}
           >
-            {/* Logo */}
             <Link href="/" className="text-xl lg:text-2xl font-bold tracking-tighter text-accent flex items-center shrink-0">
               BARRERA<span className="font-light text-muted-foreground ml-1 hidden sm:inline">Wallplate</span>
             </Link>
 
-            {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-6 lg:gap-8">
               {navLinks.map((link) => (
                 <Link
@@ -61,29 +59,33 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* Actions */}
             <div className="hidden md:flex items-center gap-4">
               <button 
-                onClick={() => setIsCartOpen(true)}
+                onClick={() => setCartOpen(true)}
                 className="p-2 relative hover:bg-accent/5 rounded-full transition-colors"
               >
                 <ShoppingCart size={20} className="text-accent" />
-                <span className="absolute top-0 right-0 w-4 h-4 bg-accent text-white text-[10px] flex items-center justify-center rounded-full">
-                  1
-                </span>
+                {itemCount > 0 && (
+                  <span className="absolute top-0 right-0 w-4 h-4 bg-accent text-white text-[10px] flex items-center justify-center rounded-full">
+                    {itemCount}
+                  </span>
+                )}
               </button>
-              <Button size="sm" variant="primary" className="px-6">
-                Upgrade
-              </Button>
+              <Link href="/product">
+                <Button size="sm" variant="primary" className="px-6">
+                  Shop Now
+                </Button>
+              </Link>
             </div>
 
-            {/* Mobile Toggle */}
             <div className="md:hidden flex items-center gap-2">
-              <button onClick={() => setIsCartOpen(true)} className="p-2 relative">
+              <button onClick={() => setCartOpen(true)} className="p-2 relative">
                 <ShoppingCart size={20} className="text-accent" />
-                <span className="absolute top-1 right-1 w-3 h-3 bg-accent text-white text-[8px] flex items-center justify-center rounded-full">
-                  1
-                </span>
+                {itemCount > 0 && (
+                  <span className="absolute top-1 right-1 w-3 h-3 bg-accent text-white text-[8px] flex items-center justify-center rounded-full">
+                    {itemCount}
+                  </span>
+                )}
               </button>
               <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 bg-accent/5 rounded-full">
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -92,7 +94,6 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -113,15 +114,15 @@ export function Navbar() {
                   </Link>
                 ))}
                 <div className="flex flex-col gap-4 pt-4">
-                   <Button className="w-full h-14">Shop Aura Series</Button>
+                  <Link href="/product" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button className="w-full h-14">Shop Aura Series</Button>
+                  </Link>
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
-
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
 }
