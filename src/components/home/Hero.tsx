@@ -1,94 +1,92 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { Section } from "@/components/ui/Section";
 import { ChevronRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <Section padding="none" className="relative min-h-screen flex items-center pt-36 lg:pt-32 pb-20 overflow-hidden">
-      {/* Background Decorative Elements - Toned down for mobile */}
-      <div className="absolute top-1/4 -left-20 w-64 h-64 lg:w-96 lg:h-96 bg-accent/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 -right-20 w-64 h-64 lg:w-96 lg:h-96 bg-accent/5 rounded-full blur-3xl opacity-30 lg:opacity-100" />
+    <section className="relative min-h-screen flex items-center pt-32 pb-20 px-6">
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent/3 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/3 rounded-full blur-3xl" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center z-10 px-4 lg:px-0">
-        {/* Text Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto w-full">
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-2xl text-center lg:text-left"
+          transition={{ duration: 0.8 }}
+          className="space-y-10"
         >
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-block py-1 px-4 rounded-full bg-accent/5 text-accent text-[10px] lg:text-xs font-bold tracking-widest uppercase mb-6"
+            transition={{ delay: 0.1 }}
+            className="inline-block text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground"
           >
             The Interior Design Upgrade System
           </motion.span>
           
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter text-accent leading-[1.1] mb-8">
-            Upgrade the smallest detail. <br />
-            <span className="text-muted-foreground italic font-light">Transform the entire room.</span>
-          </h1>
-          
-          <p className="text-lg lg:text-xl text-muted-foreground mb-12 leading-relaxed max-w-lg mx-auto lg:mx-0">
-            Barrera Wallplate eliminates visual noise with a seamless, screwless snap-on system designed for modern environments and high-end interiors.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center lg:justify-start">
-            <Button size="lg" variant="primary" className="w-full sm:w-auto">
-              Shop the Collection
-            </Button>
-            <Button size="lg" variant="outline" className="group w-full sm:w-auto">
-              Explore the Design System
-              <ChevronRight className="group-hover:translate-x-1 transition-transform" size={20} />
-            </Button>
-          </div>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-accent leading-[1.05]"
+          >
+            Upgrade the smallest detail.
+          </motion.h1>
 
-          {/* Press Section - Hidden on small screens to reduce clutter */}
-          <div className="mt-16 hidden md:block">
-            <div className="flex flex-row items-center gap-6 opacity-50">
-              <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground whitespace-nowrap">As seen in</span>
-              <div className="flex items-center gap-8 font-bold text-sm tracking-tighter">
-                <span className="whitespace-nowrap">ARCHITECTURAL DIGEST</span>
-                <span className="whitespace-nowrap">DWELL</span>
-                <span className="whitespace-nowrap">VOGUE LIVING</span>
-              </div>
-            </div>
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-lg text-muted-foreground leading-relaxed max-w-md"
+          >
+            Seamless, screwless snap-on system. Premium materials that blend perfectly with your space.
+          </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="flex gap-4"
+          >
+            <a href="/product">
+              <Button size="lg" variant="primary">Shop Collection</Button>
+            </a>
+            <a href="/design-system">
+              <Button size="lg" variant="outline" className="group">
+                How It Works
+                <ChevronRight className="group-hover:translate-x-1 transition-transform" size={18} />
+              </Button>
+            </a>
+          </motion.div>
         </motion.div>
 
-        {/* Product Visual */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative aspect-4/5 rounded-3xl lg:rounded-4xl overflow-hidden shadow-2xl border-4 lg:border-8 border-white mt-12 lg:mt-0"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border border-white/50"
         >
           <Image
             src="/assets/hero-product.svg"
-            alt="Barrera Wallplate Premium Screwless Finish"
+            alt="Barrera Wallplate"
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
           
-          {/* Floating Badge - Hidden on very small screens to avoid clutter */}
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-6 right-6 lg:bottom-8 lg:right-8 glass p-4 lg:p-6 rounded-2xl shadow-xl max-w-[160px] lg:max-w-[200px]"
+            className="absolute bottom-8 right-8 glass p-5 rounded-2xl shadow-lg"
           >
-            <p className="text-[10px] lg:text-xs font-bold uppercase tracking-wider mb-1 text-accent">Seamless Technology</p>
-            <p className="text-[9px] lg:text-[10px] text-muted-foreground leading-tight">No visible screws. Just pure, uninterrupted design.</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-accent">Seamless</p>
+            <p className="text-[10px] text-muted-foreground">No visible screws</p>
           </motion.div>
         </motion.div>
       </div>
-    </Section>
+    </section>
   );
 }

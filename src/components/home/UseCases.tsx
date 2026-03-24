@@ -2,32 +2,23 @@
 
 import { motion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
-import { Home, Building2, Star, ArrowRight } from "lucide-react";
+import { Home, Building2, Star } from "lucide-react";
 
 const useCases = [
   {
     icon: Home,
     title: "Homeowners",
-    headline: "Your home deserves more than afterthought hardware.",
-    description: "You invested in beautiful walls, premium paint, maybe even custom millwork. Why are your switches still sporting 1990s plastic? The Aura System is the detail that completes your vision.",
-    cta: "Shop for Your Home",
-    href: "/product",
+    description: "The detail that completes your home. Because you notice the small things.",
   },
   {
     icon: Building2,
     title: "Design Professionals",
-    headline: "The finishing touch that elevates your projects.",
-    description: "Architects and interior designers trust Barrera to deliver the final 5% that separates good projects from unforgettable ones. Specify Aura in your next spec and watch clients take notice.",
-    cta: "Trade Pricing",
-    href: "/contact",
+    description: "The finishing touch that elevates every project. Trusted by architects.",
   },
   {
     icon: Star,
-    title: "Airbnb Hosts & Stagers",
-    headline: "Every detail is a review. Make this one count.",
-    description: "Listings with premium details get better reviews and higher nightly rates. Aura wall plates are the invisible upgrade guests notice — and mention — without knowing why the space feels so polished.",
-    cta: "See the Collection",
-    href: "/product",
+    title: "Airbnb & Staging",
+    description: "The upgrade guests notice. And mention. Without knowing why.",
   },
 ];
 
@@ -35,50 +26,30 @@ export function UseCases() {
   return (
     <Section className="bg-white">
       <div className="text-center mb-20">
-        <motion.span
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="inline-block text-[10px] font-bold tracking-[0.3em] uppercase text-muted-foreground mb-6"
-        >
-          Built For Excellence
-        </motion.span>
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
-          One system. Endless possibilities.
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+          Built for those who notice.
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {useCases.map((useCase, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className="group relative bg-muted/20 rounded-3xl p-10 hover:bg-muted/30 transition-colors border border-transparent hover:border-muted"
+            className="text-center space-y-4"
           >
-            <div className="w-14 h-14 rounded-2xl bg-accent/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-              <useCase.icon size={24} className="text-accent" />
+            <div className="w-12 h-12 rounded-xl bg-muted/50 flex items-center justify-center mx-auto">
+              <useCase.icon size={20} className="text-accent" />
             </div>
-
-            <h3 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
               {useCase.title}
             </h3>
-            <h4 className="text-xl font-bold tracking-tight mb-4 text-accent leading-tight">
-              {useCase.headline}
-            </h4>
-            <p className="text-muted-foreground leading-relaxed mb-8">
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
               {useCase.description}
             </p>
-
-            <a
-              href={useCase.href}
-              className="inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-accent hover:gap-4 transition-all duration-300"
-            >
-              {useCase.cta}
-              <ArrowRight size={14} />
-            </a>
           </motion.div>
         ))}
       </div>
