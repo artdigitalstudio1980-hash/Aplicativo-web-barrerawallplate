@@ -9,7 +9,7 @@ interface EmailCaptureProps {
   delay?: number;
 }
 
-export function EmailCapture({ delay = 15000 }: EmailCaptureProps) {
+export function EmailCapture({ delay = 20000 }: EmailCaptureProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);

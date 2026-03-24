@@ -49,11 +49,11 @@ export function Hero() {
             </Button>
           </div>
 
-          {/* Press Section - Fixed mobile layout */}
-          <div className="mt-16 bg-muted/20 lg:bg-transparent p-6 lg:p-0 rounded-3xl lg:rounded-none">
-            <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 opacity-60">
-              <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground">As seen in</span>
-              <div className="flex flex-wrap justify-center items-center gap-6 lg:gap-10 font-bold text-sm lg:text-lg tracking-tighter">
+          {/* Press Section - Hidden on small screens to reduce clutter */}
+          <div className="mt-16 hidden md:block">
+            <div className="flex flex-row items-center gap-6 opacity-50">
+              <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground whitespace-nowrap">As seen in</span>
+              <div className="flex items-center gap-8 font-bold text-sm tracking-tighter">
                 <span className="whitespace-nowrap">ARCHITECTURAL DIGEST</span>
                 <span className="whitespace-nowrap">DWELL</span>
                 <span className="whitespace-nowrap">VOGUE LIVING</span>

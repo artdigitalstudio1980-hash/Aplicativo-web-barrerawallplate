@@ -15,7 +15,7 @@ export function StickyCTA() {
       if (!isDismissed) {
         setIsVisible(true);
       }
-    }, 8000); // Show after 8 seconds
+    }, 20000); // Show after 20 seconds
 
     return () => clearTimeout(timer);
   }, [isDismissed]);

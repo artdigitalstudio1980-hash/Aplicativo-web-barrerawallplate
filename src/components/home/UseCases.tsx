@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
 import { motion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
 import { Home, Building2, Star, ArrowRight } from "lucide-react";
 
 const useCases = [
@@ -45,8 +44,7 @@ export function UseCases() {
           Built For Excellence
         </motion.span>
         <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
-          One system.<br />
-          <span className="text-muted-foreground font-light italic">Endless possibilities.</span>
+          One system. Endless possibilities.
         </h2>
       </div>
 
@@ -60,12 +58,10 @@ export function UseCases() {
             transition={{ delay: i * 0.1 }}
             className="group relative bg-muted/20 rounded-3xl p-10 hover:bg-muted/30 transition-colors border border-transparent hover:border-muted"
           >
-            {/* Icon */}
             <div className="w-14 h-14 rounded-2xl bg-accent/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
               <useCase.icon size={24} className="text-accent" />
             </div>
 
-            {/* Content */}
             <h3 className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4">
               {useCase.title}
             </h3>
@@ -76,7 +72,6 @@ export function UseCases() {
               {useCase.description}
             </p>
 
-            {/* CTA */}
             <a
               href={useCase.href}
               className="inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-accent hover:gap-4 transition-all duration-300"

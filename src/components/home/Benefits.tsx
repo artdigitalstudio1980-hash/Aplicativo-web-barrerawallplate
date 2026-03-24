@@ -10,7 +10,7 @@ export function Benefits() {
     {
       icon: <ShieldCheck className="text-accent" size={32} />,
       title: "Seamless Perfection",
-      description: "No visible screws. A clean, uninterrupted surface that feels like Part of the wall.",
+      description: "No visible screws. A clean, uninterrupted surface that blends perfectly with your wall.",
     },
     {
       icon: <Zap className="text-accent" size={32} />,
