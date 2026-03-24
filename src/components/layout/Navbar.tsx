@@ -32,29 +32,29 @@ export function Navbar() {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-6",
-          isScrolled ? "py-4" : "py-6"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-4 lg:py-6 px-4 lg:px-0",
+          isScrolled ? "py-2 lg:py-4" : "py-4 lg:py-6"
         )}
       >
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto">
           <div
             className={cn(
-              "flex items-center justify-between px-6 py-3 rounded-full transition-all duration-500",
-              isScrolled ? "glass shadow-lg" : "bg-transparent"
+              "flex items-center justify-between px-4 lg:px-6 py-3 rounded-full transition-all duration-500",
+              isScrolled ? "glass-heavy shadow-xl" : "bg-transparent"
             )}
           >
             {/* Logo */}
-            <Link href="/" className="text-2xl font-bold tracking-tighter text-accent">
-              BARRERA<span className="font-light text-muted-foreground ml-1">Wallplate</span>
+            <Link href="/" className="text-xl lg:text-2xl font-bold tracking-tighter text-accent flex items-center shrink-0">
+              BARRERA<span className="font-light text-muted-foreground ml-1 hidden sm:inline">Wallplate</span>
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-6 lg:gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-sm font-medium text-accent/70 hover:text-accent transition-colors"
+                  className="text-xs lg:text-sm font-medium text-accent/70 hover:text-accent transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -72,18 +72,21 @@ export function Navbar() {
                   1
                 </span>
               </button>
-              <Button size="sm" variant="primary">
-                Upgrade Now
+              <Button size="sm" variant="primary" className="px-6">
+                Upgrade
               </Button>
             </div>
 
             {/* Mobile Toggle */}
-            <div className="md:hidden flex items-center gap-4">
-              <button onClick={() => setIsCartOpen(true)} className="p-2">
+            <div className="md:hidden flex items-center gap-2">
+              <button onClick={() => setIsCartOpen(true)} className="p-2 relative">
                 <ShoppingCart size={20} className="text-accent" />
+                <span className="absolute top-1 right-1 w-3 h-3 bg-accent text-white text-[8px] flex items-center justify-center rounded-full">
+                  1
+                </span>
               </button>
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2">
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 bg-accent/5 rounded-full">
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
           </div>
@@ -93,23 +96,25 @@ export function Navbar() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden glass border-t border-white/20 mt-2 mx-6 rounded-2xl overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="md:hidden glass-heavy border border-white/20 mt-3 mx-4 rounded-3xl overflow-hidden shadow-2xl"
             >
-              <div className="flex flex-col p-6 gap-4">
+              <div className="flex flex-col p-6 gap-6">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-lg font-medium text-accent py-2 border-b border-accent/5"
+                    className="text-lg font-bold text-accent tracking-tighter border-b border-accent/5 pb-2"
                   >
                     {link.name}
                   </Link>
                 ))}
-                <Button className="mt-4 w-full">Upgrade Now</Button>
+                <div className="flex flex-col gap-4 pt-4">
+                   <Button className="w-full h-14">Shop Aura Series</Button>
+                </div>
               </div>
             </motion.div>
           )}

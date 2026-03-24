@@ -56,11 +56,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.glass-heavy {
+  @apply bg-white/70 backdrop-blur-xl border border-white/20;
+}
+
 .glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
+  @apply bg-white/40 backdrop-blur-md border border-white/20;
 }
 
 .text-gradient {
