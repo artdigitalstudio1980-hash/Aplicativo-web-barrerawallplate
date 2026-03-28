@@ -22,7 +22,7 @@ export function Comparison() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-6xl font-bold tracking-tighter text-black leading-tight"
+          className="text-4xl md:text-6xl font-black tracking-tighter text-black leading-tight"
         >
           Details speak volumes.
         </motion.h2>
@@ -33,7 +33,7 @@ export function Comparison() {
           transition={{ delay: 0.2 }}
           className="mt-6 text-lg text-black/50 font-medium"
         >
-           Traditional hardware creates visual noise. Barrera Aura creates harmony.
+           Traditional hardware creates visual noise. Aura Wallpaper Integration creates harmony.
         </motion.p>
       </div>
 
@@ -46,19 +46,19 @@ export function Comparison() {
           transition={{ duration: 0.8 }}
           className="space-y-10 group"
         >
-          <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border border-black/5 grayscale group-hover:grayscale-0 transition-all duration-700 shadow-sm relative">
+          <div className="aspect-square rounded-[3rem] overflow-hidden border border-black/5 grayscale group-hover:grayscale-0 transition-all duration-700 shadow-sm relative bg-[#F9F9FB]">
             <Image
               src="/assets/before-product.png"
-              alt="Traditional wall plate with visible screws"
+              alt="Traditional wall plate with visual noise"
               fill
               className="object-cover"
             />
             <div className="absolute inset-0 bg-black/5" />
           </div>
           <div className="pl-6 border-l-2 border-red-500/20">
-            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-red-500 mb-4 px-2 py-1 bg-red-500/5 inline-block rounded-md">Structural Noise</h3>
-            <p className="text-black/50 text-base leading-relaxed max-w-sm">
-              Visible screws. Non-standard alignment. Fast-yellowing plastic. The detail that interrupts your interior vision.
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-red-500 mb-4 px-2 py-1 bg-red-500/5 inline-block rounded-md">Visual Noise</h3>
+            <p className="text-black/50 text-base leading-relaxed max-w-sm font-medium">
+              Obtrusive screws and industrial plastic interrupt the continuity of your interior design vision.
             </p>
           </div>
         </motion.div>
@@ -71,19 +71,19 @@ export function Comparison() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="space-y-10 group mt-12 lg:mt-24"
         >
-          <div className="aspect-[4/5] rounded-[3rem] overflow-hidden border-8 border-white shadow-[0_50px_80px_-20px_rgba(0,0,0,0.15)] relative">
+          <div className="aspect-square rounded-[3rem] overflow-hidden border-8 border-white shadow-[0_50px_80px_-20px_rgba(0,0,0,0.15)] relative bg-[#F9F9FB]">
             <Image
-              src="/assets/hero-product.png"
-              alt="Barrera Aura System - Seamless and Screwless"
+              src="/assets/aura-2-gang-charcoal.png"
+              alt="Aura 2-Gang Wallpaper Integration"
               fill
               className="object-cover transition-transform duration-1000 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+            <div className="absolute inset-0 bg-black/[0.02]" />
           </div>
           <div className="pl-6 border-l-2 border-green-500/20">
-            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-green-600 mb-4 px-2 py-1 bg-green-500/5 inline-block rounded-md">Visual Harmony</h3>
-            <p className="text-black/50 text-base leading-relaxed max-w-sm">
-               Seamless. Screwless. Architectural grade. The detail that finalizes your space with pure, uninterrupted design.
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-green-600 mb-4 px-2 py-1 bg-green-500/5 inline-block rounded-md">Pure Continuity</h3>
+            <p className="text-black/50 text-base leading-relaxed max-w-sm font-medium">
+               A specialized **2-Gang** plate with integrated wallpaper inlay, creating a seamless architectural finish that blends into your space.
             </p>
           </div>
         </motion.div>
