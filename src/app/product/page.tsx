@@ -6,21 +6,20 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { Info, ShieldCheck, Zap, Truck } from "lucide-react";
+import { Info, ShieldCheck, Zap, Truck, Minus, Plus } from "lucide-react";
 import { Installation } from "@/components/home/Installation";
 import { useCart } from "@/lib/cart";
 
 const variants = [
   { id: "white", name: "Classic White", hex: "#FFFFFF" },
   { id: "gray", name: "Soft Gray", hex: "#E5E5E5" },
-  { id: "black", name: "Matte Black", hex: "#1A1A1A" },
+  { id: "black", name: "Matte Black", hex: "#111111" },
 ];
 
-// Placeholder images - replace with real product shots
 const placeholderImages: Record<string, string> = {
-  white: "/assets/hero-product.svg",
-  gray: "/assets/hero-product.svg",
-  black: "/assets/hero-product.svg",
+  white: "/assets/hero-product.png",
+  gray: "/assets/hero-product.png",
+  black: "/assets/hero-product.png",
 };
 
 export default function ProductPage() {
@@ -40,126 +39,158 @@ export default function ProductPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background pt-32">
-      <Section padding="sm">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Gallery */}
-          <div className="sticky top-32">
+    <main className="min-h-screen bg-white">
+      {/* Hero Section with fixed Navbar adjustment */}
+      <Section padding="none" className="pt-32 lg:pt-48 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+          {/* Gallery - Sticky on Desktop */}
+          <div className="lg:sticky lg:top-40">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="aspect-square rounded-4xl overflow-hidden border-8 border-white shadow-2xl relative"
+              transition={{ duration: 0.8 }}
+              className="aspect-square rounded-[2rem] lg:rounded-[3rem] overflow-hidden bg-muted relative group shadow-2xl"
             >
               <Image
                 src={placeholderImages[selectedVariant.id]}
                 alt={`Aura Wall Plate - ${selectedVariant.name}`}
                 fill
-                className="object-cover transition-transform duration-500 hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                priority
               />
-              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full">
-                <span className="text-xs font-bold text-accent">{selectedVariant.name}</span>
-              </div>
+              <div className="absolute inset-0 bg-black/5" />
             </motion.div>
             
-            <div className="grid grid-cols-4 gap-4 mt-6">
+            {/* Thumbnail selector */}
+            <div className="flex gap-4 mt-8 justify-center lg:justify-start">
               {variants.map((v) => (
                 <button
                   key={v.id}
                   onClick={() => setSelectedVariant(v)}
-                  className={`aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
-                    selectedVariant.id === v.id ? "border-accent shadow-lg" : "border-muted hover:border-muted-foreground"
+                  className={`w-16 h-16 rounded-2xl border-2 transition-all duration-300 ${
+                    selectedVariant.id === v.id ? "border-black scale-105 shadow-md" : "border-transparent opacity-50 hover:opacity-100"
                   }`}
                 >
-                  <div className="w-full h-full" style={{ backgroundColor: v.hex }} />
+                   <div className="w-full h-full rounded-xl overflow-hidden border border-black/5" style={{ backgroundColor: v.hex }} />
                 </button>
               ))}
             </div>
           </div>
 
           {/* Product Info */}
-          <div className="space-y-10">
-            <div>
-              <span className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4 block">Aura Series</span>
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-accent mb-4">
-                The Aura Seamless Wall Plate
+          <div className="flex flex-col">
+            <div className="mb-12">
+              <motion.span 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-block py-1.5 px-4 rounded-full bg-black/5 text-black text-[10px] font-bold tracking-[0.2em] uppercase mb-6"
+              >
+                The Aura Series
+              </motion.span>
+              
+              <h1 className="text-4xl lg:text-6xl font-bold mb-6 tracking-tighter leading-[1.05]">
+                The Aura Seamless <br />
+                <span className="text-black/40 italic font-light">Wall Plate</span>
               </h1>
-              <p className="text-sm text-muted-foreground mb-4">1-Gang Standard Size · Screwless Design</p>
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-3xl font-light text-accent">$24.00</span>
-                <span className="px-2 py-1 bg-green-500/10 text-green-600 text-[10px] font-bold uppercase tracking-wider rounded-md">
-                  In Stock & Ready to Ship
+              
+              <div className="flex items-center gap-6 mb-8 pb-8 border-b border-black/5">
+                <span className="text-4xl font-light tracking-tight">$24.00</span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  Ready to ship
                 </span>
               </div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Transform your home's aesthetic with the Aura Series. Our patented snap-on system eliminates visible screws, creating a perfectly clean, minimalist finish that elevates any room.
+
+              <p className="text-lg text-black/60 leading-relaxed max-w-lg mb-10">
+                Eliminate visual noise with our patented snap-on system. Designed for high-end interiors where every detail matters.
               </p>
-            </div>
 
-            {/* Variant Selector */}
-            <div className="space-y-4">
-              <p className="text-xs font-bold uppercase tracking-widest text-accent">Finish: <span className="text-muted-foreground font-normal">{selectedVariant.name}</span></p>
-              <div className="flex gap-4">
-                {variants.map((v) => (
-                  <button
-                    key={v.id}
-                    onClick={() => setSelectedVariant(v)}
-                    className={`w-12 h-12 rounded-full border-2 transition-all duration-300 flex items-center justify-center ${
-                      selectedVariant.id === v.id ? "border-accent scale-110 shadow-lg" : "border-transparent hover:border-muted-foreground"
-                    }`}
-                  >
-                    <div
-                      className="w-8 h-8 rounded-full border border-muted shadow-inner"
-                      style={{ backgroundColor: v.hex }}
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Add to Cart */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <div className="flex items-center border-2 border-muted rounded-full px-4 h-14">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-2 text-muted-foreground hover:text-accent font-bold text-lg">−</button>
-                <span className="w-12 text-center font-bold">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="p-2 text-muted-foreground hover:text-accent font-bold text-lg">+</button>
-              </div>
-              <Button size="lg" className="flex-1 h-14 text-lg" onClick={handleAddToCart}>
-                Add to Cart — ${(24 * quantity).toFixed(2)}
-              </Button>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-muted">
-              <div className="flex flex-col items-center text-center gap-2">
-                <Truck size={20} className="text-muted-foreground" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Fast US Shipping</span>
-              </div>
-              <div className="flex flex-col items-center text-center gap-2">
-                <ShieldCheck size={20} className="text-muted-foreground" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Lifetime Warranty</span>
-              </div>
-              <div className="flex flex-col items-center text-center gap-2">
-                <Zap size={20} className="text-muted-foreground" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Easy Installation</span>
-              </div>
-            </div>
-
-            {/* Product Details */}
-            <GlassCard className="p-6">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center border-b border-muted pb-3">
-                  <span className="font-bold text-sm">Product Specifications</span>
-                  <Info size={16} className="text-muted-foreground" />
+              {/* Variant Selector */}
+              <div className="space-y-6 mb-12">
+                <div className="flex justify-between items-end">
+                  <label className="text-xs font-bold uppercase tracking-widest text-black/40">Finish</label>
+                  <span className="text-xs font-bold text-black">{selectedVariant.name}</span>
                 </div>
-                <ul className="text-xs text-muted-foreground space-y-2">
-                  <li className="flex justify-between"><span>Material</span><span className="text-accent font-medium">Premium High-Gloss Polymer</span></li>
-                  <li className="flex justify-between"><span>Dimensions</span><span className="text-accent font-medium">4.5" × 2.75" (Standard 1-Gang)</span></li>
-                  <li className="flex justify-between"><span>Finish</span><span className="text-accent font-medium">{selectedVariant.name}</span></li>
-                  <li className="flex justify-between"><span>Compatibility</span><span className="text-accent font-medium">All standard US switch/outlet types</span></li>
-                  <li className="flex justify-between"><span>Installation</span><span className="text-accent font-medium">Snap-on, no tools needed</span></li>
-                </ul>
+                <div className="flex gap-4">
+                  {variants.map((v) => (
+                    <button
+                      key={v.id}
+                      onClick={() => setSelectedVariant(v)}
+                      className={`w-12 h-12 rounded-full border-2 p-1 transition-all duration-500 ${
+                        selectedVariant.id === v.id ? "border-black scale-110" : "border-black/5 hover:border-black/20"
+                      }`}
+                    >
+                      <div
+                        className="w-full h-full rounded-full shadow-inner border border-black/5"
+                        style={{ backgroundColor: v.hex }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Purchase Section */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex items-center bg-black/5 rounded-2xl px-4 h-14">
+                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-2 text-black/40 hover:text-black transition-colors"><Minus size={16} /></button>
+                  <span className="w-12 text-center font-bold">{quantity}</span>
+                  <button onClick={() => setQuantity(quantity + 1)} className="p-2 text-black/40 hover:text-black transition-colors"><Plus size={16} /></button>
+                </div>
+                <Button size="lg" className="flex-1 h-14 rounded-2xl text-lg font-bold tracking-tight shadow-xl hover:shadow-2xl transition-all" onClick={handleAddToCart}>
+                  Add to Cart — ${(24 * quantity).toFixed(2)}
+                </Button>
+              </div>
+            </div>
+
+            {/* Features Glass Card */}
+            <GlassCard className="p-8! bg-white/50">
+              <div className="grid grid-cols-1 gap-6">
+                 <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center shrink-0">
+                      <Truck size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold mb-1">Fast US Shipping</h4>
+                      <p className="text-xs text-black/50">Free shipping on orders over $100. 1-3 day local delivery.</p>
+                    </div>
+                 </div>
+                 <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center shrink-0">
+                      <ShieldCheck size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold mb-1">Lifetime Warranty</h4>
+                      <p className="text-xs text-black/50">Guaranteed against aging, cracking, or color fading.</p>
+                    </div>
+                 </div>
               </div>
             </GlassCard>
+          </div>
+        </div>
+      </Section>
+
+      {/* Specifications */}
+      <Section padding="md" className="bg-[#F9F9FB] rounded-[3rem] mx-4 lg:mx-8 mb-20 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
+          <div>
+            <h2 className="text-3xl lg:text-5xl font-bold mb-8 tracking-tighter">Precision Engineering.</h2>
+            <div className="space-y-4">
+               {[
+                 { label: "Material", value: "AuraFiber™ Gloss Polymer" },
+                 { label: "Dimensions", value: "4.5\" × 2.75\" (1-Gang)" },
+                 { label: "Fitment", value: "Universal US Snap-On" },
+                 { label: "Resistance", value: "Heat & UV Resistant" }
+               ].map((spec, i) => (
+                 <div key={i} className="flex justify-between py-4 border-b border-black/5">
+                    <span className="text-sm font-bold text-black/40 uppercase tracking-widest">{spec.label}</span>
+                    <span className="text-sm font-bold">{spec.value}</span>
+                 </div>
+               ))}
+            </div>
+          </div>
+          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl">
+             <Image src="/assets/design-integration.png" alt="Aura Detail" fill className="object-cover" />
+             <div className="absolute inset-0 bg-black/10" />
           </div>
         </div>
       </Section>
@@ -167,23 +198,24 @@ export default function ProductPage() {
       <Installation />
 
       {/* FAQ */}
-      <Section className="bg-muted/30">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold tracking-tighter mb-12 text-center">Frequently Asked Questions</h2>
-          <div className="space-y-6">
+      <Section padding="lg">
+        <div className="max-w-4xl mx-auto">
+          <header className="text-center mb-16">
+            <h2 className="text-3xl lg:text-5xl font-bold tracking-tighter mb-4">Questions & Answers</h2>
+            <p className="text-black/50">Everything you need to know about the Aura System.</p>
+          </header>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { q: "Will this fit my existing outlets?", a: "Yes, our Aura Series is designed to fit all standard US 1-Gang electrical boxes." },
-              { q: "Do I need an electrician?", a: "No! The installation is purely cosmetic and snaps right over your existing hardware." },
-              { q: "Can I paint the covers?", a: "The White finish is paintable. We recommend using a high-quality spray paint for a professional look." },
+              { q: "Will this fit my existing outlets?", a: "Yes, designed for all standard US 1-Gang boxes." },
+              { q: "Do I need an electrician?", a: "No, installation is purely cosmetic and tool-less." },
+              { q: "Are they paintable?", a: "The Classic White finish is fully paintable for custom matching." },
+              { q: "What's the sub-plate for?", a: "It provides a rigid base for wallpapers to hide cut edges." }
             ].map((item, i) => (
-              <div key={i} className="glass p-6 rounded-2xl">
-                <h4 className="font-bold mb-2 flex gap-3 text-accent"><span className="text-muted-foreground">Q:</span>{item.q}</h4>
-                <p className="text-sm text-muted-foreground pl-7">{item.a}</p>
-              </div>
+              <GlassCard key={i} className="p-8">
+                <h4 className="font-bold mb-3 text-black">{item.q}</h4>
+                <p className="text-sm text-black/50 leading-relaxed">{item.a}</p>
+              </GlassCard>
             ))}
-          </div>
-          <div className="text-center mt-8">
-            <a href="/faq" className="text-accent underline text-sm">View all FAQs →</a>
           </div>
         </div>
       </Section>

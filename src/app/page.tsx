@@ -10,19 +10,23 @@ import { EmailCapture } from "@/components/home/EmailCapture";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background pt-20">
+    <main className="min-h-screen bg-white">
+      {/* Hero handles its own padding for a seamless entry */}
       <Hero />
-      <Comparison />
-      <Benefits />
-      <Installation />
-      <UseCases />
-      <Testimonials />
-      <TrustBadges />
+      
+      <div className="space-y-0 lg:space-y-12">
+        <Comparison />
+        <Benefits />
+        <Installation />
+        <UseCases />
+        <Testimonials />
+        <TrustBadges />
+      </div>
 
-      {/* Email Capture - shows after 15 seconds */}
-      <EmailCapture delay={15000} />
+      {/* Email Capture - shows after 25 seconds for a less intrusive feel */}
+      <EmailCapture delay={25000} />
 
-      {/* Sticky CTA - shows after 8 seconds */}
+      {/* Sticky CTA - shows after 10 seconds */}
       <StickyCTA />
     </main>
   );
