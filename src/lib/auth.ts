@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcrypt';
-import { UserRole } from '@/generated/prisma';
+import { UserRole } from '@prisma/client';
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'barrera-wallplate-secret-key-change-in-production-2026'
