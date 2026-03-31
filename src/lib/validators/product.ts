@@ -7,7 +7,7 @@ export const createProductSchema = z.object({
   category: z.string().optional(),
   basePrice: z.number().min(0, 'Price must be positive'),
   sku: z.string().min(1, 'SKU is required').max(50),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const updateProductSchema = createProductSchema.partial();

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { withAuth } from '@/lib/api-middleware';
 import { z } from 'zod';
@@ -8,7 +8,7 @@ const syncPushSchema = z.object({
     entityType: z.string(),
     entityId: z.string().optional(),
     operation: z.enum(['CREATE', 'UPDATE', 'DELETE']),
-    payload: z.record(z.unknown()),
+    payload: z.record(z.string(), z.unknown()),
     clientTimestamp: z.string(),
   })),
 });
@@ -31,7 +31,7 @@ export const POST = withAuth(async (req, { user }) => {
             entityType: op.entityType,
             entityId: op.entityId,
             operation: op.operation,
-            payload: op.payload,
+            payload: op.payload as any,
             status: 'SYNCED',
             syncedAt: new Date(),
           },
