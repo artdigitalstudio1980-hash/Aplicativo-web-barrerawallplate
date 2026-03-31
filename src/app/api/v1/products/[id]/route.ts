@@ -50,7 +50,7 @@ export const PUT = withAuth(async (req, { params, user }) => {
 
     const product = await prisma.product.update({
       where: { id },
-      data: parsed.data,
+      data: parsed.data as any,
       include: { variants: true, barcodes: true },
     });
 

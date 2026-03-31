@@ -69,7 +69,7 @@ export const POST = withAuth(async (req, { user }) => {
         category: data.category,
         basePrice: data.basePrice,
         sku: data.sku,
-        metadata: data.metadata || {},
+        metadata: (data.metadata as any) || {},
       },
       include: { variants: true, barcodes: true },
     });
