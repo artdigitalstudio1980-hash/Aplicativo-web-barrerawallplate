@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { withAuth } from '@/lib/api-middleware';
-import { generateBarcodeDataUri, generateCode128, generateEAN13 } from '@/lib/barcode';
+import { generateBarcodeDataUri, generateCode128, generateEAN13, type BarcodeFormat } from '@/lib/barcode';
 import { logAudit, getClientInfo } from '@/lib/audit';
 import { z } from 'zod';
 
@@ -11,6 +11,40 @@ const generateBarcodeSchema = z.object({
   type: z.enum(['EAN13', 'CODE128', 'QR']).optional().default('CODE128'),
   customCode: z.string().optional(),
 });
+
+// GET /api/v1/barcodes/generate — Admin/Seller: stream barcode image
+export const GET = withAuth(async (req) => {
+  try {
+    const { searchParams } = new URL(req.url);
+    const code = searchParams.get('code');
+    const type = (searchParams.get('type')?.toLowerCase() as BarcodeFormat) || 'code128';
+    
+    if (!code) {
+      return NextResponse.json({ error: 'Code is required' }, { status: 400 });
+    }
+
+    const { generateBarcode } = await import('@/lib/barcode');
+    const buffer = await generateBarcode({ 
+      text: code, 
+      format: type,
+      scale: 3,
+      height: 20, 
+      includeText: true
+    });
+
+    return new Response(buffer as unknown as BodyInit, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        'Content-Disposition': `inline; filename="barcode-${code}.png"`
+      },
+    });
+  } catch (error) {
+    console.error('Stream barcode error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}, ['ADMIN', 'VENDEDOR']);
 
 // POST /api/v1/barcodes/generate — Admin: generate barcode
 export const POST = withAuth(async (req, { user }) => {

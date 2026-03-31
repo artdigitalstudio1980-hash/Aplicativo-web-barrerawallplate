@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Search, Filter } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 
 interface Column<T> {
   key: string;
@@ -22,7 +22,8 @@ interface DataTableProps<T> {
   emptyMessage?: string;
 }
 
-export function DataTable<T extends Record<string, any>>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function DataTable<T extends { id?: string } & Record<string, any>>({
   columns,
   data,
   pagination,
@@ -41,17 +42,17 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className="bg-white/3 border border-white/6 rounded-2xl overflow-hidden">
       {/* Header */}
       {onSearch && (
-        <div className="p-4 border-b border-white/[0.06] flex items-center gap-3">
+        <div className="p-4 border-b border-white/6 flex items-center gap-3">
           <div className="relative flex-1 max-w-sm">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20" />
             <input
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
               placeholder={searchPlaceholder}
-              className="w-full bg-white/[0.04] border border-white/[0.06] rounded-xl pl-9 pr-4 py-2.5 text-white text-sm placeholder:text-white/20 outline-none focus:border-violet-500/50 transition-colors"
+              className="w-full bg-white/4 border border-white/6 rounded-xl pl-9 pr-4 py-2.5 text-white text-sm placeholder:text-white/20 outline-none focus:border-violet-500/50 transition-colors"
             />
           </div>
         </div>
@@ -61,7 +62,7 @@ export function DataTable<T extends Record<string, any>>({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-white/[0.06]">
+            <tr className="border-b border-white/6">
               {columns.map((col) => (
                 <th key={col.key} className="text-left text-[10px] font-bold uppercase tracking-wider text-white/30 px-5 py-3.5">
                   {col.label}
@@ -92,7 +93,7 @@ export function DataTable<T extends Record<string, any>>({
               </tr>
             ) : (
               data.map((item, i) => (
-                <tr key={item.id || i} className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors">
+                <tr key={item.id || i} className="border-b border-white/3 hover:bg-white/2 transition-colors">
                   {columns.map((col) => (
                     <td key={col.key} className="px-5 py-4 text-sm text-white/70 font-medium">
                       {col.render ? col.render(item) : item[col.key]}
@@ -112,7 +113,7 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Pagination */}
       {pagination && pagination.totalPages > 1 && (
-        <div className="flex items-center justify-between px-5 py-3 border-t border-white/[0.06]">
+        <div className="flex items-center justify-between px-5 py-3 border-t border-white/6">
           <span className="text-xs text-white/20 font-medium">
             Showing {data.length} of {pagination.total}
           </span>
@@ -120,7 +121,7 @@ export function DataTable<T extends Record<string, any>>({
             <button
               onClick={() => onPageChange?.(pagination.page - 1)}
               disabled={pagination.page <= 1}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white hover:bg-white/6 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
             >
               <ChevronLeft size={14} />
             </button>
@@ -130,7 +131,7 @@ export function DataTable<T extends Record<string, any>>({
             <button
               onClick={() => onPageChange?.(pagination.page + 1)}
               disabled={pagination.page >= pagination.totalPages}
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white hover:bg-white/[0.06] disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white hover:bg-white/6 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
             >
               <ChevronRight size={14} />
             </button>

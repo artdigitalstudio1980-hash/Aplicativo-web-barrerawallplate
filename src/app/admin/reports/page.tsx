@@ -3,34 +3,83 @@
 import { useEffect, useState, useCallback } from 'react';
 import { TopBar } from '@/components/admin/TopBar';
 import { StatsCard } from '@/components/admin/StatsCard';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, ShoppingBag, UserCheck, AlertTriangle, Download } from 'lucide-react';
 
+interface ReportTrend {
+  name: string;
+  value: number;
+}
+
+interface RecentSale {
+  id: string;
+  saleNumber: string;
+  total: number;
+  status: string;
+  createdAt: string;
+  client?: { contactName: string };
+  user?: { firstName: string; lastName: string };
+}
+
 interface ReportData {
-  overview: any;
-  sales: any;
-  recentSales: any[];
+  overview: {
+    totalProducts: number;
+    totalClients: number;
+    lowStockAlerts: number;
+    activeConsignments: number;
+    pendingInvoices: number;
+  };
+  sales: {
+    today: { count: number; total: number };
+    week: { count: number; total: number };
+    month: { count: number; total: number };
+  };
+  recentSales: RecentSale[];
 }
 
 const COLORS = ['#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#06B6D4'];
 
 export default function ReportsPage() {
   const [data, setData] = useState<ReportData | null>(null);
+  const [trendData, setTrendData] = useState<ReportTrend[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('/api/v1/reports/dashboard')
-      .then(r => r.json())
-      .then(d => setData(d.data))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const fetchData = useCallback(async () => {
+    try {
+      const [dashRes, trendRes] = await Promise.all([
+        fetch('/api/v1/reports/dashboard'),
+        fetch('/api/v1/reports/sales-trend')
+      ]);
+      const dashJson = await dashRes.json();
+      const trendJson = await trendRes.json();
+      
+      if (dashJson.data) setData(dashJson.data);
+      if (trendJson.data) setTrendData(trendJson.data);
+    } catch (err) {
+      console.error('Error fetching report data:', err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const chartData = [
-    { name: 'Mon', value: 4000 }, { name: 'Tue', value: 3000 }, { name: 'Wed', value: 2000 },
-    { name: 'Thu', value: 2780 }, { name: 'Fri', value: 1890 }, { name: 'Sat', value: 2390 },
-    { name: 'Sun', value: 3490 },
-  ];
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const formatCurrency = (val: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(val);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex-1 flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -44,19 +93,39 @@ export default function ReportsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <StatsCard title="Total Revenue" value="$42,500.00" icon={TrendingUp} color="emerald" trend={{ value: 15, label: 'up self' }} />
-          <StatsCard title="Total Sales" value="842" icon={ShoppingBag} color="violet" />
-          <StatsCard title="Active Clients" value="128" icon={UserCheck} color="cyan" />
-          <StatsCard title="Pending" value="14" icon={AlertTriangle} color="amber" />
+          <StatsCard 
+            title="Today's Revenue" 
+            value={formatCurrency(data?.sales?.today?.total || 0)} 
+            icon={TrendingUp} 
+            color="emerald" 
+          />
+          <StatsCard 
+            title="Weekly Sales" 
+            value={data?.sales?.week?.count?.toString() || '0'} 
+            icon={ShoppingBag} 
+            color="violet" 
+          />
+          <StatsCard 
+            title="Total Clients" 
+            value={data?.overview?.totalClients?.toString() || '0'} 
+            icon={UserCheck} 
+            color="cyan" 
+          />
+          <StatsCard 
+            title="Low Stock" 
+            value={data?.overview?.lowStockAlerts?.toString() || '0'} 
+            icon={AlertTriangle} 
+            color="amber" 
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[400px]">
           {/* Revenue Area Chart */}
-          <div className="lg:col-span-8 bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 flex flex-col">
+          <div className="bg-white/3 border border-white/6 rounded-2xl p-6 flex flex-col">
             <h3 className="text-white font-bold text-sm mb-6">Revenue Growth</h3>
             <div className="flex-1 min-h-0">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData}>
+                <AreaChart data={trendData}>
                   <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.3}/>
@@ -70,6 +139,7 @@ export default function ReportsPage() {
                     contentStyle={{ backgroundColor: '#12121A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
                     itemStyle={{ color: '#8B5CF6', fontSize: '12px', fontWeight: 'bold' }}
                     labelStyle={{ color: '#666', fontSize: '10px', marginBottom: '4px' }}
+                    formatter={(value: unknown) => [formatCurrency(Number(value || 0)), 'Revenue']}
                   />
                   <Area type="monotone" dataKey="value" stroke="#8B5CF6" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
                 </AreaChart>
@@ -78,7 +148,7 @@ export default function ReportsPage() {
           </div>
 
           {/* Category Pie Chart */}
-          <div className="lg:col-span-4 bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 flex flex-col">
+          <div className="lg:col-span-4 bg-white/3 border border-white/6 rounded-2xl p-6 flex flex-col">
             <h3 className="text-white font-bold text-sm mb-6">Sales by Category</h3>
             <div className="flex-1 min-h-0">
               <ResponsiveContainer width="100%" height="100%">

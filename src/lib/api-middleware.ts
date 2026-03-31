@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken, TokenPayload } from './auth';
-import { UserRole } from '@/generated/prisma';
+import { UserRole } from '@prisma/client';
 
 export interface AuthenticatedRequest extends NextRequest {
   user?: TokenPayload;
@@ -9,7 +9,7 @@ export interface AuthenticatedRequest extends NextRequest {
 type RouteHandler = (
   req: NextRequest,
   context: { params?: Record<string, string>; user: TokenPayload }
-) => Promise<NextResponse>;
+) => Promise<Response>;
 
 /**
  * Wraps a route handler with JWT authentication

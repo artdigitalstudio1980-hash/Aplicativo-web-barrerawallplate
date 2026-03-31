@@ -26,10 +26,10 @@ export function StatsCard({ title, value, icon: Icon, trend, color = 'violet' }:
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-white/[0.03] ${colors.border} border rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300 group`}
+      className={`bg-white/3 ${colors.border} border rounded-2xl p-6 hover:bg-white/5 transition-all duration-300 group`}
     >
       <div className="flex items-start justify-between mb-4">
-        <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${colors.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+        <div className={`w-11 h-11 rounded-xl bg-linear-to-br ${colors.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
           <Icon size={20} className={colors.icon} />
         </div>
         {trend && (

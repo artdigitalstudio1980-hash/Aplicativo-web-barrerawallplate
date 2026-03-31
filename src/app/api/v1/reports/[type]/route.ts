@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { withAuth } from '@/lib/api-middleware';
 import { startOfDay, startOfWeek, startOfMonth, subDays } from 'date-fns';
@@ -94,6 +94,23 @@ export const GET = withAuth(async (req, { params }) => {
         }));
 
         return NextResponse.json({ data: enriched });
+      }
+
+      case 'sales-trend': {
+        const last7Days = Array.from({ length: 7 }, (_, i) => {
+          const date = subDays(new Date(), i);
+          return { start: startOfDay(date), end: new Date(date.setHours(23, 59, 59, 999)), label: date.toLocaleDateString('en-US', { weekday: 'short' }) };
+        }).reverse();
+
+        const trends = await Promise.all(last7Days.map(async (day) => {
+          const sale = await prisma.sale.aggregate({
+            where: { saleDate: { gte: day.start, lte: day.end }, status: { not: 'CANCELLED' } },
+            _sum: { total: true },
+          });
+          return { name: day.label, value: Number(sale._sum.total || 0) };
+        }));
+
+        return NextResponse.json({ data: trends });
       }
 
       default:
