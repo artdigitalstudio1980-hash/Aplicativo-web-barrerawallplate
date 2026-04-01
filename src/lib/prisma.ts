@@ -1,18 +1,19 @@
 import { PrismaClient } from '@prisma/client';
 
-
-const createPrismaClient = () => {
+// Patrón Singleton para evitar múltiples instancias de Prisma en desarrollo
+const prismaClientSingleton = () => {
   return new PrismaClient({
-    accelerateUrl: process.env.DATABASE_URL,
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
 };
 
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
+
 const globalForPrisma = globalThis as unknown as {
-  prisma: ReturnType<typeof createPrismaClient> | undefined;
+  prisma: PrismaClientSingleton | undefined;
 };
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+export const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
