@@ -82,13 +82,15 @@ export const GET = withAuth(async (req, { params }) => {
           take: 10,
         });
 
-        const variantIds = topProducts.map(tp => tp.variantId);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const variantIds = topProducts.map((tp: any) => tp.variantId);
         const variants = await prisma.productVariant.findMany({
           where: { id: { in: variantIds } },
           include: { product: { select: { name: true } } },
         });
 
-        const enriched = topProducts.map(tp => ({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const enriched = topProducts.map((tp: any) => ({
           ...tp,
           variant: variants.find(v => v.id === tp.variantId),
         }));
