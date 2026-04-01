@@ -21,6 +21,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Barrera Wallplate | Upgrade the Smallest Detail",
   description: "Transform any room with Barrera's premium screwless wall plate system. The final 5% detail that makes your space feel truly premium.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Barrera Wallplate",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   keywords: ["screwless wall plate", "premium switch cover", "interior design", "home upgrade", "seamless wall plate", "modern switch plate"],
   openGraph: {
     title: "Barrera Wallplate | Premium Screwless Design",
