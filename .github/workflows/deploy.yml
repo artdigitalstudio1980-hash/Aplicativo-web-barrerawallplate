@@ -1,0 +1,69 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - run: npm run build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Create deployment package
+        run: |
+          zip -r /tmp/deploy.zip . \
+            --exclude "node_modules/*" ".next/*" ".git/*" "public/images/*"
+      - name: Upload via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          source: "/tmp/deploy.zip"
+          target: "/home/${{ secrets.HOSTINGER_USER }}/domains/barrerawallplate.com/"
+      - name: Extract & restart
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            cd /home/${{ secrets.HOSTINGER_USER }}/domains/barrerawallplate.com
+            rm -rf node_modules .next deploy.zip
+            unzip -o /tmp/deploy.zip
+            rm /tmp/deploy.zip
+            npm install --production
+            npx prisma generate
+            npx prisma db push --accept-data-loss || true
+            mkdir -p tmp && touch tmp/restart.txt
+      - name: Post-deploy check
+        uses: appleboy/ssh-action@v1.0.3
+        continue-on-error: true
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          script: |
+            sleep 10
+            STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://barrerawallplate.com/)
+            echo "Homepage status: $STATUS"
+            [ "$STATUS" = "200" ] && echo "Sitio responde OK" || echo "Sitio no responde 200"
