@@ -37,7 +37,7 @@ jobs:
           source: "/tmp/deploy.zip"
           target: "/home/${{ secrets.HOSTINGER_USER }}/domains/barrerawallplate.com/"
       - name: Extract & restart
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
@@ -55,7 +55,7 @@ jobs:
             npx prisma db push --accept-data-loss || true
             mkdir -p tmp && touch tmp/restart.txt
       - name: Post-deploy check
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         continue-on-error: true
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
